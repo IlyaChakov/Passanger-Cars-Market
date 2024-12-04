@@ -5,10 +5,10 @@ library(dplyr)
 library(data.table)
 library(forecast)
 
-df <- read_tsv("Исходные Данные\\Торговля\\export-unit.tsv")
+df <- read_tsv("Исходные Данные\\Торговля\\import-unit.tsv")
 
 # Замена названий столбцов
-names(df) <- gsub("-Объемы экспорта", "", names(df))  # Убираем "экспорт " из названий столбцов
+names(df) <- gsub("-Объемы импорта", "", names(df))  # Убираем "экспорт " из названий столбцов
 
 df <- df %>%
   select(-contains("Единица"))
@@ -16,17 +16,17 @@ df <- df %>%
 df <- df %>%
     select(-last_col())
 
-df <- df[df$Экспортеры != "Весь Мир", ]
+df <- df[df$Импортеры != "Весь Мир", ]
 
 df <- df %>%
     pivot_longer(
-        cols = -"Экспортеры",
+        cols = -"Импортеры",
         names_to = "Год",
         values_to = "Объем"
     )
 
 df$Год <- as.numeric(df$Год)
-df$Экспортеры <- as.character(df$Экспортеры)
+df$Импортеры <- as.character(df$Импортеры)
 df$Объем <- as.numeric(df$Объем)
 
 df$Объем <- df$Объем / 1000000
@@ -39,7 +39,7 @@ df <- df %>%
 df <- df %>%
     pivot_wider(
         id_cols = c(Год, `Ед. Изм.`),
-        names_from = "Экспортеры",
+        names_from = "Импортеры",
         values_from = "Объем"
     )
 
@@ -105,4 +105,4 @@ df_long <- combined_df %>%
     values_to = "Объем"          # Новый столбец для значений
   )
 
-fwrite(df_long, file = "export-countries.tsv", sep = "\t", quote = FALSE)
+fwrite(df_long, file = "import-unit.tsv", sep = "\t", quote = FALSE)
