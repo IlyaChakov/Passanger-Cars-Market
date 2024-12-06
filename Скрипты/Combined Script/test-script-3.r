@@ -118,7 +118,7 @@ df_transformed <- process_dataframe(
     data = df,
     period = "Year",
     start = 1999,
-    end = 2025,
+    end = 2024,
     frequency = 1
 )
 
