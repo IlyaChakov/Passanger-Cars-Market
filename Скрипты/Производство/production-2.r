@@ -172,3 +172,23 @@ summary <- df %>%
     select(where(~ is.character(.) | is.factor(.))) %>%
     summarise(across(everything(), ~ list(unique(.)))) %>%
     unnest(cols = everything())
+
+df$country <- NULL
+df$`vehicle-type` <- NULL
+
+df <- df %>%
+    rename(Volume = Value) %>%
+    arrange(Date)
+
+df <- df %>%
+    pivot_wider(
+        id_cols = c(Unit, Date),
+        names_from = manufacturer,
+        values_from = Volume
+    )
+
+df <- df %>%
+  mutate(across(where(is.numeric), ~ ifelse(. == 0, NA, .)))
+
+df <- df %>%
+  mutate(across(where(is.numeric), ~ ifelse(. == 1, NA, .)))
