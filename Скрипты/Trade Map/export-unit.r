@@ -1,9 +1,134 @@
-# Загрузка необходимых библиотек
-library(tidyr)
-library(readr)  # Если вам нужна функция read_csv()
-library(dplyr)
-library(data.table)
+# Библиотеки
 library(forecast)
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(readr)
+library(forecast)
+library(data.table)
+
+fill_forecast_ets <- function(data, time = "Date", frequency = 1, cols = "Unit", n_periods = 5) {
+  # Убедимся, что имена столбцов уникальны
+  names(data) <- make.unique(names(data))
+  
+  # Проверка наличия столбца времени и оставляемых без изменения столбцов
+  if (!time %in% names(data)) stop("The time column specified does not exist in the dataset.")
+  if (!all(cols %in% names(data))) stop("One or more specified columns to keep unchanged do not exist in the dataset.")
+  
+  # Сохраняем порядок столбцов
+  original_order <- names(data)
+  
+  # Сохраняем временную шкалу и заменяем её на числовой ряд
+  original_time <- data[[time]]  # Исходная временная шкала
+  data[[time]] <- seq_along(data[[time]])  # Замена временной шкалы на числовой ряд
+  
+  # Извлечение временной шкалы в числовом формате
+  start_index <- min(data[[time]], na.rm = TRUE)
+  end_index <- max(data[[time]], na.rm = TRUE)
+  
+  # --- Функции для обработки данных ---
+  
+  # Заполнение пропусков в середине
+  fill_missing_in_middle <- function(column) {
+    if (all(is.na(column))) return(column) # Если весь столбец NA, возвращаем его
+    first_non_na <- which(!is.na(column))[1]
+    last_non_na <- which(!is.na(column))[length(which(!is.na(column)))]
+    ts_data <- ts(column[first_non_na:last_non_na], frequency = frequency)
+    imputed_values <- na.interp(ts_data)
+    column[first_non_na:last_non_na] <- as.numeric(imputed_values)
+    return(column)
+  }
+  
+  # Прогнозирование пропусков в начале столбца
+  forecast_column_start <- function(column, start_index, end_index) {
+    if (all(is.na(column))) return(column) # Если весь столбец NA, возвращаем его
+    first_known_index <- min(which(!is.na(column)))
+    if (first_known_index == 1) return(column)
+    known_values <- column[first_known_index:length(column)]
+    ts_data <- ts(rev(known_values), frequency = frequency)
+    forecast_horizon <- first_known_index - 1
+    if (forecast_horizon > 0) {
+      ets_model <- ets(ts_data)
+      forecast_values <- forecast(ets_model, h = forecast_horizon)$mean
+      forecast_values <- rev(as.numeric(forecast_values))
+      full_values <- c(forecast_values, known_values)
+    } else {
+      full_values <- known_values
+    }
+    return(c(full_values, rep(NA, length(column) - length(full_values))))
+  }
+  
+  # Прогнозирование пропусков в конце столбца
+  forecast_column_end <- function(column, start_index, end_index) {
+    if (all(is.na(column))) return(column) # Если весь столбец NA, возвращаем его
+    last_known_index <- max(which(!is.na(column)))
+    ts_data <- ts(column[1:last_known_index], frequency = frequency)
+    forecast_horizon <- end_index - start_index - last_known_index + 1
+    if (forecast_horizon > 0) {
+      ets_model <- ets(ts_data)
+      forecast_values <- forecast(ets_model, h = forecast_horizon)$mean
+      full_values <- c(column[1:last_known_index], as.numeric(forecast_values))
+    } else {
+      full_values <- column
+    }
+    return(full_values)
+  }
+  
+  # --- Обработка данных ---
+  
+  # Столбцы для обработки
+  columns_to_process <- setdiff(names(data), c(time, cols))
+  
+  # Заполнение пропусков в середине
+  imputed_data <- data %>%
+    mutate(across(all_of(columns_to_process), fill_missing_in_middle))
+  
+  # Прогнозирование пропусков в начале
+  result_start <- imputed_data %>%
+    mutate(across(all_of(columns_to_process), ~ forecast_column_start(., start_index, end_index)))
+  
+  # Прогнозирование пропусков в конце
+  result_end <- imputed_data %>%
+    mutate(across(all_of(columns_to_process), ~ forecast_column_end(., start_index, end_index)))
+  
+  # Объединение данных
+  processed_data <- map2_dfc(result_end[columns_to_process], result_start[columns_to_process], coalesce)
+  
+  # Составляем итоговый датафрейм с сохранением исходной временной шкалы
+  filled_data <- data %>%
+    select(all_of(cols), all_of(time)) %>%
+    bind_cols(processed_data) %>%
+    mutate(!!time := original_time) %>%  # Восстанавливаем временную шкалу
+    select(all_of(original_order))  # Восстанавливаем порядок столбцов
+  
+  # --- Прогноз на n_periods вперед ---
+  forecast_future <- function(column) {
+    ts_data <- ts(column, frequency = frequency)  # Преобразование в временной ряд
+    ets_model <- ets(ts_data)                     # ETS модель
+    forecast_values <- forecast(ets_model, h = n_periods)$mean  # Прогноз
+    return(as.numeric(forecast_values))           # Возвращаем прогноз
+  }
+  
+  # Прогнозируем будущее для каждого столбца
+  future_values <- map_dfc(columns_to_process, ~ forecast_future(filled_data[[.x]]))
+  colnames(future_values) <- columns_to_process
+  
+  # Расширяем временную шкалу
+  future_time <- seq(max(original_time, na.rm = TRUE) + 1, by = 1, length.out = n_periods)
+  
+  # Создаем датафрейм для будущих данных
+  future_data <- tibble(!!time := future_time, !!!future_values)
+  
+  # Продлеваем неизменяемые столбцы
+  for (col in cols) {
+    future_data[[col]] <- filled_data[[col]][1]  # Используем первое значение из столбца `cols`
+  }
+  
+  # Объединяем текущие и будущие данные
+  final_result <- bind_rows(filled_data, future_data)
+  
+  return(final_result)
+}
 
 df <- read_tsv("Исходные Данные\\Торговля\\export-unit.tsv")
 
@@ -29,16 +154,9 @@ df$Год <- as.numeric(df$Год)
 df$Экспортеры <- as.character(df$Экспортеры)
 df$Объем <- as.numeric(df$Объем)
 
-df$Объем <- df$Объем / 1000000
-
-df$'Ед. Изм.' <- "млн штук"
-
-df <- df %>%
-  relocate(`Ед. Изм.`, .after = Год)
-
 df <- df %>%
     pivot_wider(
-        id_cols = c(Год, `Ед. Изм.`),
+        id_cols = "Год",
         names_from = "Экспортеры",
         values_from = "Объем"
     )
@@ -47,56 +165,12 @@ df <- df %>%
 df <- df %>%
   mutate(across(where(is.numeric), ~ ifelse(. == 0, NA, .)))
 
-# Функция для интерполяции значений с сохранением NA
-interpolate_column <- function(column) {
-  # Проверяем, есть ли хотя бы два ненулевых значения для интерполяции
-  if (sum(!is.na(column)) > 1) {
-    return(approx(seq_along(column), column, seq_along(column), method = "linear", rule = 1, ties = "ordered")$y)
-  } else {
-    return(column) # Возвращаем как есть, если интерполяция невозможна
-  }
-}
-
-# Применение интерполяции ко всем числовым столбцам
-df <- df %>%
-  mutate(across(where(is.numeric) & !contains("Год"), ~ interpolate_column(.)))
-
-df <- df %>%
-  mutate(across(where(is.numeric) & !contains("Год"), ~ ifelse(is.na(.), mean(., na.rm = TRUE), .)))
-
-# Функция для прогнозирования по столбцу
-forecast_ets <- function(column, years, h) {
-  ts_data <- ts(column, start = min(years), frequency = 1)  # Преобразование в временной ряд
-  ets_model <- ets(ts_data)                                # Построение ETS модели
-  forecast(ets_model, h = h)                               # Прогнозирование
-}
-
-# Количество лет для прогноза
-horizon <- 1
-
-# Применение прогнозирования ко всем столбцам, кроме `Year`
-forecast_results <- df %>%
-  select(-Год, -`Ед. Изм.`) %>%                                      # Убираем колонку `Year` для обработки
-  summarise(across(everything(), ~ list(forecast_ets(., df$Год, horizon)))) %>%
-  pivot_longer(everything(), names_to = "Variable", values_to = "Forecast") %>%
-  mutate(Forecast = lapply(Forecast, function(x) {
-    data.frame(
-      Year = max(df$Год) + seq_along(x$mean),
-      Forecast = as.numeric(x$mean)
-    )
-  })) %>%
-  unnest(cols = c(Forecast))
-
-# Итоговый прогнозируемый датафрейм
-forecast_df <- forecast_results %>%
-  pivot_wider(names_from = Variable, values_from = Forecast) %>%
-  rename(Год =Year) %>%
-  mutate(`Ед. Изм.` = "млн штук") %>%
-  relocate(`Ед. Изм.`, .after = Год)
-
-# Объединение с исходными данными
-combined_df <- df %>%
-  bind_rows(forecast_df)
+df_forecast <- fill_forecast_ets(
+    data = df,
+    time = "Год",
+    frequency = 1,
+    n_periods = 1
+)
 
 df_long <- combined_df %>%
   pivot_longer(
@@ -105,4 +179,8 @@ df_long <- combined_df %>%
     values_to = "Объем"          # Новый столбец для значений
   )
 
-fwrite(df_long, file = "export-countries.tsv", sep = "\t", quote = FALSE)
+df_long$Объем <- df_long$Объем / 1000000
+
+df$'Ед. Изм.' <- "млн штук"
+
+fwrite(df_long, file = "Обработанные Данные\\Торговля\\export-countries.tsv", sep = "\t", quote = FALSE)

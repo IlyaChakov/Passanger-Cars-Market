@@ -1,6 +1,9 @@
 library(forecast)
 library(dplyr)
 library(purrr)
+library(tidyr)
+library(readr)
+library(data.table)
 
 fill_forecast_ets <- function(data, time = "Date", frequency = 1, cols = "Unit") {
   # Убедимся, что имена столбцов уникальны
@@ -99,25 +102,104 @@ fill_forecast_ets <- function(data, time = "Date", frequency = 1, cols = "Unit")
   return(final_result)
 }
 
-# --- Пример использования функции ---
+df <- read_csv("Исходные Данные\\Производство\\Car Production Statistics.csv")
 
-# Пример данных
-df <- data.frame(
-  Date = 2000:2020,
-  Unit = "mln dollars",
-  Variable1 = c(NA, NA, 115, 120, 130, 135, 140, NA, NA, 130, 120, 110, 115, 125, 119, 170, 160, 150, 140, NA, NA),
-  Variable2 = c(NA, 50, 55, 60, NA, 70, 75, 80, NA, 95, 100, NA, 110, 115, NA, 125, 130, 135, NA, NA, NA)
+df <- df %>%
+    pivot_wider(
+        id_cols = c(Date, Unit),
+        names_from = "country",
+        values_from = "Value"
+    )
+
+df <- df %>%
+  mutate(across(where(is.numeric), ~ ifelse(. == 0, NA, .)))
+
+final_df <- fill_forecast_ets(
+    data = df,
+    time = "Date",
+    frequency = 1,
+    cols = "Unit"
 )
 
-# Заполнение пропусков и прогнозирование
-final_result <- fill_forecast_ets(data = df, time = "Date", frequency = 1, cols = "Unit")
+df_2 <- df %>%
+    select(c(Date, Unit, Australia))
 
-# Пример с месячными данными
-df_monthly <- data.frame(
-  Date = seq(as.Date("2000-01-01"), as.Date("2001-12-01"), by = "month"),
-  Unit = "mln dollars",
-  Variable1 = c(NA, 120, 125, 130, 135, NA, 145, 150, NA, 160, 165, 170, NA, 180, 185, 190, NA, 200, 205, 210, 215, 220, NA, NA)
+final_df2 <- fill_forecast_ets(
+    data = df_2,
+    time = "Date",
+    frequency = 1,
+    cols = "Unit"
 )
 
-# Заполнение пропусков и прогнозирование (месячные данные)
-final_result_monthly <- fill_forecast_ets(data = df_monthly, time = "Date", frequency = 12, cols = "Unit")
+df_3 <- df %>%
+    select(c(Date, Unit, Iran))
+
+final_df3 <- fill_forecast_ets(
+    data = df_3,
+    time = "Date",
+    frequency = 1,
+    cols = "Unit"
+)
+
+df_4 <- df %>%
+    select(c(Date, Unit, Egypt))
+
+df_4[22, "Egypt"] <- 17500
+df_4[23, "Egypt"] <- 16500
+
+final_df4 <- fill_forecast_ets(
+    data = df_4,
+    time = "Date",
+    frequency = 4,
+    cols = "Unit"
+)
+
+# Пример временного ряда
+ts_data <- ts(c(100, 200, 150, 300, 250, 200, 150), frequency = 1)
+
+# Построение ARIMA
+arima_model <- auto.arima(ts_data)
+arima_forecast <- forecast(arima_model, h = 5)
+
+# Вывод прогноза
+print(arima_forecast)
+
+
+ts_data <- ts(c(100, 200, 150, 300, 250, 200, 150), frequency = 2)
+
+# STL-декомпозиция и прогноз
+stl_model <- stlm(ts_data, s.window = "periodic")
+stl_forecast <- forecast(stl_model, h = 5)
+
+# Вывод прогноза
+print(stl_forecast)
+
+
+# Пример разнонаправленного временного ряда
+data <- c(100, 200, 150, 300, 250, 200, 150)
+
+# Преобразуем в временной ряд с частотой 1 (годовые данные)
+ts_data <- ts(data, frequency = 1)
+
+# Построение ETS
+ets_model <- ets(ts_data)
+ets_forecast <- forecast(ets_model, h = 5)
+
+# Диагностика ETS-модели
+summary(ets_model)
+
+# Построение ARIMA
+arima_model <- auto.arima(ts_data)
+arima_forecast <- forecast(arima_model, h = 5)
+
+# STL-декомпозиция
+stl_model <- stlm(ts_data, s.window = "periodic")
+stl_forecast <- forecast(stl_model, h = 5)
+
+# Сравнение результатов
+print("ETS Forecast:")
+print(ets_forecast)
+print("ARIMA Forecast:")
+print(arima_forecast)
+print("STL Forecast:")
+print(stl_forecast)

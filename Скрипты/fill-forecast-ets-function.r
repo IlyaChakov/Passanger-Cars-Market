@@ -1,8 +1,13 @@
+# Библиотеки
 library(forecast)
 library(dplyr)
+library(tidyr)
 library(purrr)
+library(readr)
+library(forecast)
+library(data.table)
 
-fill_forecast_ets <- function(data, time = "Date", frequency = 1, cols = "Unit") {
+fill_forecast_ets <- function(data, time = "Date", frequency = 1, cols = "Unit", n_periods = 5) {
   # Убедимся, что имена столбцов уникальны
   names(data) <- make.unique(names(data))
   
@@ -90,34 +95,47 @@ fill_forecast_ets <- function(data, time = "Date", frequency = 1, cols = "Unit")
   processed_data <- map2_dfc(result_end[columns_to_process], result_start[columns_to_process], coalesce)
   
   # Составляем итоговый датафрейм с сохранением исходной временной шкалы
-  final_result <- data %>%
+  filled_data <- data %>%
     select(all_of(cols), all_of(time)) %>%
     bind_cols(processed_data) %>%
     mutate(!!time := original_time) %>%  # Восстанавливаем временную шкалу
     select(all_of(original_order))  # Восстанавливаем порядок столбцов
   
+  # --- Прогноз на n_periods вперед ---
+  forecast_future <- function(column) {
+    ts_data <- ts(column, frequency = frequency)  # Преобразование в временной ряд
+    ets_model <- ets(ts_data)                     # ETS модель
+    forecast_values <- forecast(ets_model, h = n_periods)$mean  # Прогноз
+    return(as.numeric(forecast_values))           # Возвращаем прогноз
+  }
+  
+  # Прогнозируем будущее для каждого столбца
+  future_values <- map_dfc(columns_to_process, ~ forecast_future(filled_data[[.x]]))
+  colnames(future_values) <- columns_to_process
+  
+  # Расширяем временную шкалу для будущего
+  future_time <- seq(max(original_time, na.rm = TRUE) + 1, by = 1, length.out = n_periods)
+  
+  # Создаем датафрейм для будущих данных
+  future_data <- tibble(!!time := future_time, !!!setNames(future_values, columns_to_process))
+  
+  # Объединяем текущие и будущие данные
+  final_result <- bind_rows(filled_data, future_data)
+  
   return(final_result)
 }
 
-# --- Пример использования функции ---
 
 # Пример данных
 df <- data.frame(
   Date = 2000:2020,
   Unit = "mln dollars",
-  Variable1 = c(NA, NA, 115, 120, 130, 135, 140, NA, NA, 130, 120, 110, 115, 125, 119, 170, 160, 150, 140, NA, NA),
+  Variable1 = c(NA, NA, 115, 120, 130, 135, 140, NA, NA, 160, 165, 170, 180, 190, 200, 210, 220, 230, 240, NA, NA),
   Variable2 = c(NA, 50, 55, 60, NA, 70, 75, 80, NA, 95, 100, NA, 110, 115, NA, 125, 130, 135, NA, NA, NA)
 )
 
-# Заполнение пропусков и прогнозирование
-final_result <- fill_forecast_ets(data = df, time = "Date", frequency = 1, cols = "Unit")
+# Прогноз на 5 периодов вперед
+result <- fill_forecast_ets(data = df, time = "Date", frequency = 1, cols = "Unit", n_periods = 0)
 
-# Пример с месячными данными
-df_monthly <- data.frame(
-  Date = seq(as.Date("2000-01-01"), as.Date("2001-12-01"), by = "month"),
-  Unit = "mln dollars",
-  Variable1 = c(NA, 120, 125, 130, 135, NA, 145, 150, NA, 160, 165, 170, NA, 180, 185, 190, NA, 200, 205, 210, 215, 220, NA, NA)
-)
-
-# Заполнение пропусков и прогнозирование (месячные данные)
-final_result_monthly <- fill_forecast_ets(data = df_monthly, time = "Date", frequency = 12, cols = "Unit")
+# Вывод результата
+print(result)
