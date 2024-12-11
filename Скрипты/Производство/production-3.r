@@ -177,8 +177,38 @@ df <- df %>%
     )
 
 df <- df %>%
+    arrange(Date)
+
+df$Unit <- "Number"
+
+df <- df %>%
     pivot_wider(
         id_cols = c(Unit, Date),
         names_from = manufacturer,
         values_from = Volume
     )
+
+df <- df %>%
+    relocate(Unit, .after = Date)
+
+df$Date <- as.numeric(df$Date)
+
+df_forecast <- fill_forecast_ets(
+    data = df,
+    time = "Date",
+    frequency = 1,
+    cols = "Unit",
+    n_periods = 7
+)
+
+df_long <- df_forecast %>%
+  pivot_longer(
+    cols = -c(Date, Unit),  # Все столбцы, кроме "Год" и "Ед. Изм."
+    names_to = "Manufacturer",         # Новый столбец для названий стран
+    values_to = "Volume"          # Новый столбец для значений
+  )
+
+df_long$Volume <- df_long$Volume / 1000000
+df_long$Unit <- "mln units"
+
+fwrite(df_long, file = "Обработанные Данные\\Производство\\production-manufacturers.tsv", sep = "\t", quote = FALSE)
