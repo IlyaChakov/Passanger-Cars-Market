@@ -1,0 +1,89 @@
+"country","AutomobileTariffsDutyRate","AutomobileTariffsSalesTax","AutomobileTariffsAdditionalDutiesAndTaxes"
+"India",125,,"Landing charges (1% CIF) |\nCountervailing duty (24% (Cost, Insurance, Freight and Pier or Docking charges + Landing charges)) |\nCESS (3% (Duty + Countervailing duty)) |\nAdditional Countervailing Duty (4% (Cost, Insurance, Freight and Pier or Docking charges + Landing charges + Countervailing duty + CESS))"
+"China",25,17,"Consumption tax (3% (Cost, Insurance, Freight and Pier or Docking charges / (100 – 3)))"
+"United States",2.5,-1,"Merchandise Processing Fee"
+"Indonesia",40,10,"Income tax (7.5% Cost, Insurance, Freight and Pier or Docking charges)"
+"Pakistan",60,17,
+"Nigeria",20,5,
+"Brazil",35,-1,"Airport fee (50% (Storage fee + Handling fee)) |\nStorage fee (1% Cost, Insurance, Freight and Pier or Docking charges) |\nHandling fee (BRL0.015 per KG) |\nDeclaration fee (BRL30.00) |\nIPI (40% Cost, Insurance, Freight and Pier or Docking charges) |\nPIS PASEP COFINS tax ((9.25% (CIF * (1 + ICMS%) * (Duty% + IPI% * (1 + Duty%)))) / (0.9075 * (1 – ICMS%))) |"
+"Bangladesh",25,15,"Supplementary Duty (SD) (45% Cost, Insurance, Freight and Pier or Docking charges) |\nRegulatory Duty (RD) (5% (Cost, Insurance, Freight and Pier or Docking charges + Supplementary Duty (SD))) |\nAdvance Trade VAT (4% Cost, Insurance, Freight and Pier or Docking charges) |\nAIT(Advance Income Tax) (5% Cost, Insurance, Freight and Pier or Docking charges) |"
+"Mexico",20,16,"DTA (0.8% Cost, Insurance, Freight and Pier or Docking charges)"
+"Japan",,8,
+"Egypt",40,15,
+"Philippines",30,12,
+"Vietnam",70,10,"Special sales tax (45)"
+"Turkey",10,1,"Special consumption tax (37% Cost, Insurance, Freight and Pier or Docking charges)"
+"Germany",10,19,
+"Thailand",80,7,
+"United Kingdom",10,20,
+"France",10,20,
+"South Africa",25,14,
+"Italy",10,22,
+"Colombia",35,16,
+"South Korea",10,10,"Education tax (30% (Special consumption tax, or Liquor tax, or Interior tax, whichever is applicable)) |\nSpecial tax for rural development (10% Special consumption tax) |\nSpecial consumption tax (5% Cost, Insurance, Freight and Pier or Docking charges)"
+"Spain",10,21,
+"Argentina",35,21,"Statistical fee (0.5% CIF)"
+"Canada",6.1,-1,"Excise (CA$60.00 per piece)"
+"Poland",10,23,
+"Morocco",17.5,20,"Parafiscal tax (0.25% CIF)"
+"Malaysia",30,10,"Excise (60%)"
+"Peru",6,16,"Excise (0%) |\nAdditional fee (0% Cost, Insurance, Freight and Pier or Docking charges) |\nMunicipal tax (2% (Cost, Insurance, Freight and Pier or Docking charges + Excise + Tariff surcharge))"
+"Saudi Arabia",5,,
+"Venezuela",40,12,
+"Australia",5,10,"Import Processing Charge (AU$40.20) |\nLuxury Car Tax (33% * (10 / 11) * (Cost, Insurance, Freight and Pier or Docking charges + GST – 60316))"
+"Taiwan",17.5,5,"Commodity tax (25% Cost, Insurance, Freight and Pier or Docking charges) |\nTrade promotion fee (0.04% CIF)"
+"Sri Lanka",30,12,"Excise (92%) |\nPAL (Ports and Airport Levy) (5% CIF)"
+"Chile",6,19,"Classification Charge (1% CIF)"
+"Romania",10,24,
+"Guatemala",,12,
+"Netherlands",10,21,
+"Ecuador",40,12,"FodInfa (Children development fund) (0.5% CIF) |\nICE (Consumption Tax) (0% Cost, Insurance, Freight and Pier or Docking charges)"
+"Belgium",10,21,
+"Jordan",,16,
+"Dominican Republic",20,18,"Exchange Surcharge (13% CIF)"
+"United Arab Emirates",5,,
+"Czech Republic",10,21,
+"Sweden",10,25,
+"Portugal",10,23,
+"Greece",10,23,
+"Hungary",10,27,
+"Israel",7,18,"Import port fee (US$50.31 Import port fee if weight more 50 kg per shipment)"
+"Austria",10,20,
+"Switzerland",,8,
+"Bulgaria",10,20,
+"Denmark",10,25,
+"Singapore",,7,"Excise (20%)"
+"Finland",10,24,
+"Norway",,25,"Other import fee (NOK386.10 per g + NOK140.00 per pcs)"
+"Slovakia",10,20,
+"Oman",5,,
+"Ireland",10,23,
+"New Zealand",10,15,"Import entry transaction fee (NZ$46.89)"
+"Costa Rica",,13,"Consumption tax (83% Cost, Insurance, Freight and Pier or Docking charges) |\nLaw 6946 (National Emergency Law) (1% Cost, Insurance, Freight and Pier or Docking charges) |\nGE (Vat on estimated earnings) (25% (Cost, Insurance, Freight and Pier or Docking charges + Consumption tax + Law 6946 (National Emergency Law)))"
+"Kuwait",5,,
+"Panama",,7,"ISC (Consumption tax) (12% Cost, Insurance, Freight and Pier or Docking charges)"
+"Croatia",10,25,
+"Puerto Rico",2.5,7.25,
+"Qatar",5,,
+"Namibia",25,15,
+"Lithuania",10,21,
+"Botswana",25,12,
+"Lesotho",25,14,
+"Slovenia",10,22,
+"Latvia",10,21,
+"Bahrain",5,,
+"Estonia",10,20,
+"Cyprus",10,19,
+"Reunion",10,8.5,"Excise (18%)"
+"Luxembourg",10,15,
+"Malta",10,18,
+"Guadeloupe",10,8.5,"Excise (9.5%)"
+"Martinique",10,8.5,"Excise (9.5%)"
+"French Guiana",10,,"Excise (23%)"
+"Jersey",10,5,
+"Isle of Man",10,20,
+"Andorra",10,4.5,
+"Guernsey",10,,
+"Liechtenstein",,8,
+"Monaco",10,20,
+"San Marino",10,,
