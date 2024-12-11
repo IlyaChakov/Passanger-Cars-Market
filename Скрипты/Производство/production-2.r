@@ -166,61 +166,9 @@ fill_forecast_ets <- function(data, time = "Date", frequency = 1, cols = NULL, n
   return(final_result)
 }
 
-df <- read_tsv("Исходные Данные\\Торговля\\export-unit.tsv")
+df <- read_csv("Исходные Данные\\Производство\\World Motor Vehicle Production Statistics (by manufacturer).csv")
 
-# Замена названий столбцов
-names(df) <- gsub("-Объемы экспорта", "", names(df))  # Убираем "экспорт " из названий столбцов
-
-df <- df %>%
-  select(-contains("Единица"))
-
-df <- df %>%
-    select(-last_col())
-
-df <- df[df$Экспортеры != "Весь Мир", ]
-
-df <- df %>%
-    pivot_longer(
-        cols = -"Экспортеры",
-        names_to = "Год",
-        values_to = "Объем"
-    )
-
-df$Год <- as.numeric(df$Год)
-df$Экспортеры <- as.character(df$Экспортеры)
-df$Объем <- as.numeric(df$Объем)
-
-df <- df %>%
-    pivot_wider(
-        id_cols = "Год",
-        names_from = "Экспортеры",
-        values_from = "Объем"
-    )
-
-# Замена всех числовых ячеек с нулём на NA
-df <- df %>%
-  mutate(across(where(is.numeric), ~ ifelse(. == 0, NA, .)))
-
-df$Джибути <- NULL
-
-df_forecast <- fill_forecast_ets(
-    data = df,
-    time = "Год",
-    frequency = 1,
-    n_periods = 1
-)
-
-df_long <- df_forecast %>%
-  pivot_longer(
-    cols = -c(Год),  # Все столбцы, кроме "Год" и "Ед. Изм."
-    names_to = "Страна",         # Новый столбец для названий стран
-    values_to = "Объем"          # Новый столбец для значений
-  )
-
-df_long$Объем <- df_long$Объем / 1000000
-df_long$'Ед. Изм.' <- "млн штук"
-
-df_long <- df_long %>%
-  relocate(`Ед. Изм.`, .after = Год)
-
-fwrite(df_long, file = "Обработанные Данные\\Торговля\\export-countries.tsv", sep = "\t", quote = FALSE)
+summary <- df %>%
+    select(where(~ is.character(.) | is.factor(.))) %>%
+    summarise(across(everything(), ~ list(unique(.)))) %>%
+    unnest(cols = everything())
