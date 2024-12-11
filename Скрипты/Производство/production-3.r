@@ -6,6 +6,7 @@ library(purrr)
 library(readr)
 library(forecast)
 library(data.table)
+library(readxl)
 
 fill_forecast_ets <- function(data, time = "Date", frequency = 1, cols = NULL, n_periods = 0) {
   # Убедимся, что имена столбцов уникальны
@@ -166,42 +167,18 @@ fill_forecast_ets <- function(data, time = "Date", frequency = 1, cols = NULL, n
   return(final_result)
 }
 
-df <- read_csv("Исходные Данные\\Производство\\World Motor Vehicle Production Statistics (by manufacturer).csv")
-
-summary <- df %>%
-    select(where(~ is.character(.) | is.factor(.))) %>%
-    summarise(across(everything(), ~ list(unique(.)))) %>%
-    unnest(cols = everything())
-
-df$country <- NULL
-df$`vehicle-type` <- NULL
+df <- read_excel("Исходные Данные\\Производство\\Manufacturers Total.xlsx")
 
 df <- df %>%
-    rename(Volume = Value)
-
-# Замена всех числовых ячеек с нулём на NA
-df <- df %>%
-  mutate(across(where(is.numeric), ~ ifelse(. == 0, NA, .)))
-
-# Найти минимальный и максимальный год
-min_year <- min(df$Date)
-max_year <- max(df$Date)
-
-# Создать полный диапазон годов для каждого производителя
-df_filled <- df %>%
-  group_by(manufacturer) %>%
-  complete(Date = seq(min_year, max_year)) %>% # Заполнить недостающие годы
-  ungroup()
-
-df_filled <- df_filled %>%
-    arrange(Date)
-
-df_filled$Unit <- "Number"
-
-df_wide <- df_filled %>%
-    pivot_wider(
-        names_from = Date,
-        values_from = Volume
+    pivot_longer(
+        cols = -c("manufacturer", "Unit"),
+        names_to = "Date",
+        values_to = "Volume"
     )
 
-fwrite(df_wide, file = "Исходные Данные\\Производство\\manufacturers-wide.tsv", sep = "\t", quote = FALSE)
+df <- df %>%
+    pivot_wider(
+        id_cols = c(Unit, Date),
+        names_from = manufacturer,
+        values_from = Volume
+    )

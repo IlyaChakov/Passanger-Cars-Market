@@ -1,0 +1,143 @@
+manufacturer	Unit	1998	1999	2000	2001	2002	2003	2004	2005	2006	2007	2008	2009	2010	2011	2012	2013	2014
+Anhui jac automotive	Number													200730				
+Anhui jiangghuai	Number									63343	209880	207711	336979					
+Ashok leyland	Number																638	430
+Asia	Number																	
+Avtovaz	Number	6e+05	718000	755997		703040	699888	717985	721492	765627	735897	801563	294737	545767	562347	553232	495013	381964
+Avtovaz-seaz	Number				786008													
+Baic	Number														33374	83033	243437	538027
+Beijing aig (without isuzu)	Number				4653	9602												
+Beijing automobile	Number									297528								
+Beijing automotive	Number										454272	446680	684534	13138				
+Bmw	Number			834628	946730	1090258	1118940	1250345	1323119	1366838	1541503	1439918	1258417	1481253	1738160	2065216	2006366	2165566
+Bmw  rover	Number	1175000	1121000															
+Brilliance	Number									190377	293588	241553	314189	226840	188336	231527	279335	235115
+Byd	Number									60135	100376	192971	427732	521232	449425	455444	510950	433718
+Chana ag	Number				32328													
+Chana ag(without suzuki)	Number					57227												
+Chana automobile	Number									446692	543787	531149	1425777	929195				
+Changan	Number			1e+05											850631	835334	873794	1089179
+Chen zhou gonow nanyan chifeng motor vehicle	Number													49039				
+Chenzhou ji'ao	Number												51008					
+Chery	Number									319389	427882	350560	508567	685103	629386	550565	459283	449333
+Chery auto	Number							79565	185588									
+China first acg	Number																	
+China national	Number										100202							
+Chongqing lifan	Number											122783	104434	71090				
+Chongqing lifan  motor co.	Number														124228	183750	168395	148452
+Chrysler	Number									748337	754855	529458	211160	340205	502020	656892		
+Cnaic (changhe&harbin)	Number				121288	137916												
+Daewoo	Number	727000	890000	689766	469520													
+Daihatsu	Number						725060	785166	803176	905932	711595							
+Daimler	Number									1275152	1335226							
+Daimler ag	Number											1380091	1055169	1351372	1443419	1455650	1631502	1808125
+Daimlerchrysler	Number	1925000	1997000	2043376														
+Daimlerchrysler (with evobu	Number				2392992		1819973	1913693	1965410									
+Daimlerchrysler(with mercedes-chrysler-dodge-smart-fl-evobus)	Number					1998946												
+Dongfeng	Number											489266						
+Dongfeng  mc	Number									257873	437035		663262	350041	410626	539845	642092	745765
+Dongfeng (without citroã«n)	Number					50255												
+Faw	Number									393754	690712	637720	650275	780507	619535	480443	448290	391079
+Faw group (without vw)	Number				21488	77466	214851											
+Faw group (without vw, toyota, mazda)	Number							50009	58817									
+Fiat	Number	2303000	2234000							1755663	1990715	1849200	1958021	1781385	1741652	1501979	2163040	1904618
+Fiat-iveco	Number			2185897			1619185											
+Fiat-iveco (with alfa-romeo-lancia-ferrari-irisbus)	Number					1710439												
+Fiat-iveco (with irisbus)	Number				1928696			1583501	1539576									
+Ford	Number	3600000	3534000	4038670	3699258					3956708	3565626	3346561	2952026	2958507	3093893	3123340	3317048	3230842
+Ford (jaguar-volvo cars)	Number						3320706	3497334	3514496									
+Ford (with us makes-volvo cars- jaguar)	Number					3606715												
+Fuji	Number									507552	512606	552096	440229	595465	528234	734959	808919	888812
+Fuji (subaru)	Number				478971	460822	458163	512953	508281									
+Fuji-subaru	Number	460000	491000	500238														
+Fujian	Number									49145	84138		103171					
+Fujian motor	Number													115560				
+G.m.	Number	5090000	5344000	5266263						5779719	6259520	6015257	4997824	6266959	6494385	6608567	6733192	6643030
+Gaz	Number	1e+05	125000	116319		65648	56783	65686	51596	51740	39138	22043	2161		1			
+Gaz-paz	Number				80692													
+Geely	Number									207149	216774	220955	330275	802319	897107	922906	969896	890652
+General motors	Number				4663399													
+General motors (opel-vauxhall)	Number						4682656	4502680										
+General motors (opel-vauxhall-gm daewoo)	Number								5657225									
+General motors (with us makes-opel-vauxhall)	Number					4900561												
+Gm-daewoo	Number					379441	500639											
+Gm-daewoo (with dimc)	Number							869382										
+Great wall	Number									39566	122605	129651	226560	294321	366452	487704	630423	610023
+Great wall motor	Number							54904	67657									
+Groupe vw	Number			4859478														
+Guangzhou auto	Number												62990					
+Guangzhou auto industry	Number														78124	87408	141817	161334
+Guihang youngman lotus	Number																71101	63724
+Hafei motor	Number													154377				
+Haima automobile	Number																61054	
+Haima cars	Number																	93934
+Harbin hafei	Number									265019	231488	226754						
+Hebei zhongxing	Number												48173			4955	2794	
+Hindustan	Number				20467	19969	15098											
+Hino	Number																	
+Honda	Number	2219000	2249000	2286771	2608773	2930688	2868705	3183269	3324282	3549787	3868546	3878940	2984011	3592113	2886343	4078376	4263239	4478123
+Hunan jiangnan	Number																	167522
+Hunan jiangnan automobile	Number													135648				
+Hunan jiangnan automobile manufacturing co	Number														137937	117051	133790	
+Hyundai	Number	704000	1018000							2003608	2292075	2435471	4222532	5247339	6118221	6761074	6909194	7628779
+Hyundai-kia	Number			2023032	2087500	2185002	2275535	2377546	2726600									
+Ijmach avto	Number					65751	78495	82687	42582									
+Ijmash-avto-roslada	Number				71182													
+Iran khodro	Number														124815			493585
+Isuzu	Number	46000	40000	102911	100959	41233	25949	14620										
+Jac	Number														218352	200278	206132	196777
+Jiangxi changhe	Number									136739	112083	107422		154668				
+Jiangxi jiangling automotive	Number													460				
+Kamaz	Number			33561	37837	38735	40016	41207	30361									
+Kia	Number	282000	657000							1186894	1286299	1310821						
+Kuozui	Number											63827	88801	115082				
+Luaz	Number											88316						
+M.a.n.	Number																	
+Mahindra	Number									91120	104441	100615	145977	166770	345062	429101	407563	372637
+Mahindra&mahindra	Number				56380			78940										
+Mazda	Number	818000	816000	796353	779970	864255	960935	1042849	1091756	1169640	1165660	1241218	920892	1233862	1103632	1097661	1175443	1261521
+Mg rover	Number			174885	163144	147037	132789	106088	29104									
+Mitsubishi	Number	1085000	1108000	1271590	1242138	1406330	1303439	1110679	998043	1008970	1100528	1175431	715773	1056666	1016876	980001	1090571	1199823
+Nanjing auto	Number						99469	94551	111397									
+Navistar	Number																	
+Nissan	Number	2089000	1911000			2164621	2363155	2423893	2697362	2512519	2650813	2788632	2381260	3142126	3581445	3830954	4090677	4279030
+Nissan-nissan diesel	Number			2045371	1966844													
+Other makes	Number	593000	332000							218769	189057							
+Paccar	Number																	
+Perodua	Number			70000														
+Porsche	Number			51574	56746	55903	81324	84095	98135	98512	107170	96721	75637	95529	127020	86083		
+Proton	Number	96000	172000									156813	129741	143256	143052	134934	116882	93840
+Psa	Number									2961437	3024863	2840884	2769902	3214810	3161955	2554059	2445889	2521833
+Psa peugeot citroen	Number	1830000	2042000	2493980	2710472	2894030	2934641	3004710	2982690									
+Qingling motor	Number												50120					
+Renault	Number	1943000	1976000							2137016	2276044	2048422	2044106	2395876	2443040	2302769	2347913	2398555
+Renault-dacia-samsung	Number			2101855	2070369	2049809	2110557	2163620	2195162									
+Rongcheng huatai	Number																	54079
+Rongcheng huatai motor	Number													81300				
+Roslada	Number			31941		41424	27649											
+Saic	Number									206627	313002	282003	347598	240439	1292296	1523398	1685392	1769837
+Saic (without gm&vw)	Number					51823												
+Saic -cherry auto	Number						101141											
+Saic-sangyong (without gm&vw)	Number								131536									
+Saipa	Number														678152			346914
+Samsung	Number	42000	6000	13416														
+Scania	Number																	
+Shangdong kaima	Number										65790		169023					
+Shannxi	Number														9524	8044	1172	109
+Shannxi auto	Number										68160	75220						
+South east (fujian)	Number														73872	81512	94951	56256
+Ssangyong	Number	33000	74000	91407	100315	143412	144416	131536										
+Suzuki	Number									2004310	2284139	2306435	2103553	2503436	2337237	2483721	2452573	2543077
+Suzuki - maruti	Number	1058000	1216000	1196770	1161712	1345806	1455411	1639366	1723022									
+Tata	Number		71000							237856	243251	489742	376514	579052	658241	744067	650708	614247
+Tata (telco)	Number			90122	54464	77097	140670	179046	163089									
+Toyota	Number						5369176	5869629	6157038	6800228	7211474	7768633	6148794	7267535	6793714	8381968	8565176	8788018
+Toyota-daihatsu	Number	4200000	4328000															
+Toyota-daihatsu-hino	Number			4681435	5021259	5555111												
+Uaz	Number			40250	35302	33648	32748	31136	29141	28636	31869	30953				32469	27260	25356
+Volkswagen	Number	4506000	4519000							5429896	5964004	6110115	5902583	7120532	8157058	8576964	9259506	9766293
+Volkswagen group	Number				4881096		4843085	4892529	4979487									
+Volkswagen group (with vw-audi-seat-skoda)	Number					4829456												
+Volvo	Number	399000	407000															
+Yuejin	Number	2000																
+Ziyang nanjun	Number												72470					
