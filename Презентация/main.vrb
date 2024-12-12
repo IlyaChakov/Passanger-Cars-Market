@@ -1,4 +1,0 @@
-\frametitle{Цены за тонну\footnote{World Bank}}
-    \begin{center}
-    \input{Plots/Price/price.tex}
-    \end{center}

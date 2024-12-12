@@ -1,0 +1,190 @@
+% Загрузка данных в таблицу
+\pgfplotstableread[col sep=tab]{
+    Date	Unit	Fiat-iveco (with irisbus)	Ford (with us makes-volvo cars- jaguar)	General motors (with us makes-opel-vauxhall)	Honda	Hyundai	Nissan	Psa	Renault	Toyota	Volkswagen	Остальные
+    2010	mln units	1.781385	2.958507	6.266959	3.592113	5.247339	3.142126	3.21481	2.395876	7.267535	7.120532	24.3608905313534
+    2011	mln units	1.741652	3.093893	6.494385	2.886343	6.118221	3.581445	3.161955	2.44304	6.793714	8.157058	26.3857802108481
+    2012	mln units	1.501979	3.12334	6.608567	4.078376	6.761074	3.830954	2.554059	2.302769	8.381968	8.576964	28.0533919456372
+    2013	mln units	2.16304	3.317048	6.733192	4.263239	6.909194	4.090677	2.445889	2.347913	8.565176	9.259506	29.1915145054614
+    2014	mln units	1.904618	3.230842	6.64303	4.478123	7.628779	4.27903	2.521833	2.398555	8.788018	9.766293	30.5160411678802
+    2015	mln units	4.865233	6.393305	7.484452	4.543838	7.988479	5.170074	2.982035	3.032652	10.083831	9.872424	36.0927886345453
+    2016	mln units	4.681457	6.429485	7.793066	4.999266	7.889538	5.556241	3.152787	3.373278	10.213486	10.126281	38.9873479345453
+    2017	mln units	4.600847	6.386818	6.85688	5.236842	7.218391	5.769277	3.649742	4.153589	10.466051	10.382334	40.5646738048489
+    2018	mln units	4.60808813420947	6.38792911503123	7.0966321621099	5.31971944972409	7.4854999792138	5.76639554654591	3.77419866044503	4.15351073566518	10.6040596735341	10.6773784247785	41.1572363371925
+    2019	mln units	4.60808813420947	6.38792911503123	7.0966321621099	5.50627319046837	7.75251486513912	5.76639554654591	3.89869258596048	4.15351073566518	10.9322124863308	10.9724189446522	42.3408233914948
+    2020	mln units	4.60808813420947	6.38792911503123	7.0966321621099	5.69282693121264	8.01952975106444	5.76639554654591	4.02318651147592	4.15351073566518	11.2603652991274	11.2674594645259	43.5244104457972
+    2021	mln units	4.60808813420947	6.38792911503123	7.0966321621099	5.87938067195691	8.28654463698976	5.76639554654591	4.14768043699137	4.15351073566518	11.5885181119241	11.5624999843996	44.7079975000995
+    2022	mln units	4.60808813420947	6.38792911503123	7.0966321621099	6.06593441270119	8.55355952291508	5.76639554654591	4.27217436250682	4.15351073566518	11.9166709247207	11.8575405042734	45.9147865135773
+    2023	mln units	4.60808813420947	6.38792911503123	7.0966321621099	6.25248815344546	8.8205744088404	5.76639554654591	4.39666828802227	4.15351073566518	12.2448237375174	12.1525810241471	47.1873350137443
+    2024	mln units	4.60808813420947	6.38792911503123	7.0966321621099	6.43904189418973	9.08758929476572	5.76639554654591	4.52116221353772	4.15351073566518	12.572976550314	12.4476215440208	48.4598835139113
+} \ProductionCountries
+
+% Динамика цен
+\begin{tikzpicture}
+    \begin{axis}[
+        plotstyle-1,
+        ybar stacked,
+        %xmin=2010, xmax=2024,
+        ymax=140,
+        ymin=0,
+        ytick distance=20,
+        xtick distance=1,
+        ylabel={млн штук}, % Подпись оси Y
+        legend columns=5,
+        enlarge x limits=0.05,
+    ]
+
+    \addplot[fill=gold,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-4}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=Toyota,
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{Toyota}
+
+    \addplot[fill=blue,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-4}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=Volkswagen,
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{Volkswagen}
+
+    \addplot[fill=darkblue,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-4}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=Hyundai,
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{Hyundai}
+
+    \addplot[fill=red,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-4}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=General motors (with us makes-opel-vauxhall),
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{General Motors}
+
+    \addplot[fill=yellow,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-4}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=Honda,
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{Honda}
+
+    \addplot[fill=Color6,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-4}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=Ford (with us makes-volvo cars- jaguar),
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{Ford}
+
+    \addplot[fill=Color7,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-4}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=Nissan,
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{Nissan}
+
+    \addplot[fill=Color8,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-4}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=Fiat-iveco (with irisbus),
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{Fiat}
+
+    \addplot[fill=Color9,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-4}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=Psa,
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{PSA}
+
+    \addplot[fill=Color10,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-4}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=Renault,
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{Renault}
+
+    \addplot[fill=white,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-4}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=Остальные,
+        col sep=tab
+      ] {\ProductionCountries};
+    
+    \end{axis}
+\end{tikzpicture}

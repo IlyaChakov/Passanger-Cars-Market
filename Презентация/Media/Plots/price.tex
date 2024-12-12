@@ -1,0 +1,47 @@
+% Загрузка данных в таблицу
+\pgfplotstableread[col sep=tab]{
+    Год	Мир	Россия
+    2010	20	15
+    2011	21	15.5
+    2012	22	16
+    2013	22.5	18
+    2014	23	20
+    2015	24	21
+    2016	25	22
+    2017	26	25
+    2018	27	28
+    2019	28	30
+    2020	29	32
+    2021	30	35
+    2022	31.5	40
+    2023	32	42
+    2024	33	45
+} \tablePrice
+
+% Динамика цен
+\begin{tikzpicture}
+    \begin{axis}[
+        plotstyle-1,
+        xmin=2010, xmax=2024,
+        ymax=50, ymin=10,
+        ytick distance=5,
+        xtick distance=1,
+        ylabel={тыс долл}, % Подпись оси Y
+        legend columns=-1,
+      ]
+
+      % Используем ранее загруженную таблицу
+      \addplot[color=blue] table[
+        x=Год,
+        y=Мир,
+      ] {\tablePrice};
+      \addlegendentry{Мир}
+
+      \addplot[color=red] table[
+        x=Год,
+        y=Россия,
+        col sep=tab, % Указываем, что разделитель столбцов — табуляция
+      ] {\tablePrice};
+      \addlegendentry{Россия}
+    \end{axis}
+\end{tikzpicture}

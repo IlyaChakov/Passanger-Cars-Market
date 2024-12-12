@@ -1,0 +1,191 @@
+% Загрузка данных в таблицу
+\pgfplotstableread[col sep=tab]{
+    Date	Unit	Brazil	China	Czech Republic	Germany	India	Indonesia	Japan	South Korea	Spain	United States	Остальные
+    2010	mln units	2.58469	13.897083	1.069518	5.552409	2.831542	0.496524	8.310362	3.866206	1.789441	2.731105	15.4887072720823
+    2011	mln units	2.534534	14.485326	1.191968	5.871918	3.038332	0.561863	7.158525	4.221617	1.766194	2.966133	16.4729112720823
+    2012	mln units	2.623704	15.523658	1.171774	5.388456	3.285496	0.743501	8.554219	4.167089	1.742947	4.105853	16.2360252720823
+    2013	mln units	2.742309	18.085213	1.128473	5.439904	3.138988	0.925111	8.189323	4.122604	1.7197	4.346958	15.9204576054156
+    2014	mln units	2.314789	19.919795	1.246506	5.604026	3.158215	1.01126	8.27707	4.124116	1.898342	4.253098	16.2087399387489
+    2015	mln units	2.018954	21.079427	1.298236	5.707938	3.378063	0.824445	7.830722	4.135108	2.21898	4.163679	16.1559372720823
+    2016	mln units	1.778464	24.420744	1.344182	5.746808	3.677605	0.968101	7.873886	3.859991	2.354117	3.934357	16.2861022720823
+    2017	mln units	2.269468	24.806687	1.413881	5.645581	3.95255	0.982356	8.347836	3.735399	2.291492	3.033216	17.0453949644162
+    2018	mln units	2.386758	23.529423	1.345041	5.120409	4.064774	1.055774	8.35822	3.66173	2.267396	2.795971	16.5822424790899
+    2019	mln units	2.44849	21.360193	1.427563	4.661328	3.623335	1.045666	8.328756	3.612587	2.248019	2.51278	15.4624806077114
+    2020	mln units	1.60887	19.994081	1.152901	3.515372	2.851268	0.5514	6.960025	3.211706	1.800664	1.926795	12.1736116703763
+    2021	mln units	1.707851	21.407962	1.105223	3.096165	3.631095	0.889756	6.619242	3.162727	1.662174	1.56306	12.1398626214405
+    2022	mln units	1.824833	23.836083	1.217787	3.480357	4.439039	1.21425	6.566356	3.438355	1.785432	1.751736	11.98089792863
+    2023	mln units	1.781612	26.123757	1.397816	4.109371	4.783628	1.180355	7.765428	3.908747	1.90705	1.745171	13.4145651184963
+    2024	mln units	1.78161638241582	28.2505638404894	1.46556287587098	4.10930801926299	4.91735826293535	1.08401827318073	7.31126840715816	4.00779136342168	1.90703782455406	1.74517165766466	13.3096098293988
+
+} \ProductionCountries
+
+% Динамика цен
+\begin{tikzpicture}
+    \begin{axis}[
+        plotstyle-1,
+        ybar stacked,
+        %xmin=2010, xmax=2024,
+        ymax=80,
+        ymin=0,
+        ytick distance=10,
+        xtick distance=1,
+        ylabel={млн штук}, % Подпись оси Y
+        legend columns=-1,
+        enlarge x limits=0.05,
+    ]
+
+    \addplot[fill=gold,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-3}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=China,
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{Китай}
+
+    \addplot[fill=blue,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-3}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=Japan,
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{Япония}
+
+    \addplot[fill=darkblue,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-3}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=India,
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{Индия}
+
+    \addplot[fill=red,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-3}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=Germany,
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{Германия}
+
+    \addplot[fill=yellow,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-3}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=South Korea,
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{Р. Корея}
+
+    \addplot[fill=Color6,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-3}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=Spain,
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{Испания}
+
+    \addplot[fill=Color7,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-3}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=Brazil,
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{Бразилия}
+
+    \addplot[fill=Color8,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-3}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=United States,
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{США}
+
+    \addplot[fill=Color9,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-3}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=Czech Republic,
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{Чехия}
+
+    \addplot[fill=Color10,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-3}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=Indonesia,
+        col sep=tab
+      ] {\ProductionCountries};
+    \addlegendentry{Индонезия}
+
+    \addplot[fill=white,
+        every node near coord/.style={check for zero/.code={\pgfkeys{/pgf/fpu=true}
+        \pgfmathparse{\pgfplotspointmeta-3}
+        \pgfmathfloatifflags{\pgfmathresult}{-}{\pgfkeys{/tikz/coordinate}}{}
+        \pgfkeys{/pgf/fpu=false}}, 
+        check for zero, font=\footnotesize}, 
+        nodes near coords={\pgfmathprintnumber[fixed zerofill,precision=0]{\pgfplotspointmeta}},
+        ] table[
+        x=Date,
+        y=Остальные,
+        col sep=tab
+      ] {\ProductionCountries};
+    
+    \end{axis}
+\end{tikzpicture}
