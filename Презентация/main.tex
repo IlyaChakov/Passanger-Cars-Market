@@ -14,6 +14,11 @@
 \usepackage{colortbl}
 \usepackage{makecell}
 \usepackage{array}
+% Листинги исходного кода
+\usepackage{verbatim}
+\usepackage{fancyvrb}
+\usepackage{listings}
+\lccode`\~=0\relax % Исправление для listings в XeLaTeX и LuaLaTeX
 
 % Настройки оформления
 \input{Setup/theme.tex} % Тема презентации
@@ -34,8 +39,9 @@
 % Структура документа
 \frame{\titlepage} % Титульный слайд
 \include{Sections/contents} % Оглавление
-\include{Sections/introduction} % Введение
+%\include{Sections/introduction} % Введение
 
+\include{Sections/section-11} % Методология исследования
 \include{Sections/section-1} % Производство
 \include{Sections/section-10} % Запасы
 \include{Sections/section-2} % Использование

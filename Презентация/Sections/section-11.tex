@@ -1,0 +1,30 @@
+% Методология исследования
+\section{Методология исследования}
+
+\begin{frame}[fragile]
+    \frametitle{Методология исследования}
+    \begin{columns}[t]
+        % Первая колонка (текст)
+        \begin{column}{0.5\textwidth}
+            \textbf{Проделанная работа:}
+            \begin{itemize}
+                \item Пропущенные значения ддатафреймов и значения будущих периодов были спрогнозированы на основе \textbf{ETS-модели} временных рядов
+                \item В целях оптимизации исследования одним из авторов был написан скрипт в $R$ в виде функции для обработки датафреймов (листинг справа, полная версия — на репозитории GitHub)
+            \end{itemize}
+        \end{column}
+
+        % Вторая колонка (изображение)
+        \begin{column}{0.5\textwidth}
+            \textbf{Листинг функции:}
+            \begin{verbatim}
+result_df <- fill_forecast_ets(
+    data = df, # Исходный датафрейм
+    time = "Date", # Временная шкала
+    frequency = 1, # Сезонность
+    cols = NULL, # Фиксированные столбцы
+    n_periods = 0 # Периоды прогноза
+)
+            \end{verbatim}
+        \end{column}
+    \end{columns}
+\end{frame}

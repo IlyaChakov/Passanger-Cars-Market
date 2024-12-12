@@ -42,4 +42,4 @@ convert_tsv_to_latex <- function(input_file, output_file) {
 }
 
 # Использование функции
-convert_tsv_to_latex("Итоговые Таблицы\\Регулирование\\top-tariffs.tsv", "Презентация\\Media\\Tables\\tariffs.tex")
+convert_tsv_to_latex("Обработанные Данные\\Россия\\table-6.tsv", "Презентация\\Media\\Tables\\table-6.tex")
