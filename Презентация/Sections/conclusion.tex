@@ -1,0 +1,41 @@
+% Заключение
+\section*{Заключение}
+
+\begin{frame}
+    \frametitle{Table Example}
+    \begin{center}
+    \pgfplotstabletypeset[
+        col sep=tab,
+        string type,
+        header=true,
+        every head row/.style={
+            before row=\hline
+            %\rowcolor{black}
+            },
+        every last row/.style={after row=\hline},
+        column type/.add={|}{},
+        every last column/.style={
+            column type/.add={}{|}},
+        every even row/.style={
+            before row={\hline
+                        \rowcolor[gray]{0.95}},
+            after row=\hline},
+        columns/Год/.style={column name=\textbf{Год}}, 
+        columns/Китай/.style={column type=|l},
+    ]{Data/test-table.tsv}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TEST}
+    \begin{center}
+       \input{Data/tex-table.tex}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{TEST}
+    \begin{center}
+       \input{table-2.tex}
+    \end{center}
+\end{frame}

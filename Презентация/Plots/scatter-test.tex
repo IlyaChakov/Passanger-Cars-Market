@@ -1,0 +1,71 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        plotstyle-1,
+        xmin=0, xmax=0.7,
+        ymax=2.5, ymin=-2.5,
+        ytick distance=1,
+        ylabel={Trade Value ECI}, % Подпись оси Y
+        xlabel={Relatedness},
+        %tick align=inside,
+        legend columns=-1,
+        %enlargelimits = false,
+        colorbar,
+        colormap={custom}{
+            rgb255=(193,18,31)
+            rgb255=(255,255,255)   % Green at 1/2
+            rgb255=(51,153,153)   % Blue at 0
+        },
+        colorbar style={at={(1.025,1)},
+            width=0.015*\pgfkeysvalueof{/pgfplots/parent axis width},
+            font=\footnotesize},
+            ytick align=inside,
+        point meta min=0,
+        point meta max=15,
+        tick style={draw=none} %
+    ]
+
+    % Exports
+    \addplot[
+        scatter,
+        only marks,
+        scatter src=explicit,
+        mark=*,
+        scatter/use mapped color={
+            draw=black,
+            fill=mapped color,
+        },
+        % store the (original) of "C" in a macro ...
+        visualization depends on={\thisrow{Экспорт} \as \perpointmarksize},
+        scatter/@pre marker code/.append style={
+            % ... and use this macro here
+            % (please note that I have changed the values a bit )
+            /tikz/mark size={1pt+abs(\perpointmarksize/5)}
+        },
+    ]
+    table[meta=Экспорт,
+        x=Relatedness,
+        y=Trade Value ECI,
+        col sep=tab, % Указываем, что разделитель столбцов — табуляция
+    ]
+    {Data/scatter-test.tsv};
+    \addlegendentry{Test}
+
+    \addplot[thick, black]
+    table[
+        x=Relatedness,
+        y= {create col/linear regression={y=Trade Value ECI}},
+        col sep=tab, % Указываем, что разделитель столбцов — табуляция
+    ]
+    {Data/scatter-test.tsv};
+    \addlegendentry{
+        Linear Regression:
+        $
+        x = \pgfmathprintnumber{\pgfplotstableregressiona}
+        \cdot z
+        \pgfmathprintnumber[print sign]
+        \pgfplotstableregressionb
+        $
+    }
+
+    \end{axis}
+\end{tikzpicture}

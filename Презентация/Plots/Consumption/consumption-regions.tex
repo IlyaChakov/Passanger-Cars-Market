@@ -1,0 +1,48 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        xbar=0pt,
+        plotstyle-2,
+        bar width=0.10,
+        enlarge y limits=0.25,
+        xmin=0,
+        %xmax=4.5,
+        %ymax=60, 
+        %ymin=0,
+        %xtick distance=10,
+        tick align=inside,
+        ylabel={млн тонн},
+        yticklabels={2015, 2019, 2020, 2021},
+        legend columns=-1,
+    ]
+
+    % Азия
+    \addplot[fill=gold,
+        nodes near coords,
+        nodes near coords align={horizontal},
+        every node near coord/.append style={anchor=east},
+        nodes near coords style={/pgf/number format/.cd,fixed zerofill,precision=0},
+        ] table[
+        x=Азия,
+        y=Период,
+        col sep=tab
+    ]
+    {Data/Consumption/consumption-regions.tsv};
+    \addlegendentry{Азия}
+
+    % Европа
+    \addplot[fill=blue,
+        nodes near coords,
+        nodes near coords align={horizontal},
+        every node near coord/.append style={anchor=east},
+        nodes near coords style={/pgf/number format/.cd,fixed zerofill,precision=0},
+        nodes near coords align=center,
+        ] table[
+        x=Европа,
+        y=Период,
+        col sep=tab
+    ]
+    {Data/Consumption/consumption-regions.tsv};
+    \addlegendentry{Европа}
+  
+    \end{axis}
+\end{tikzpicture}

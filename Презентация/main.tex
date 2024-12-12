@@ -1,0 +1,52 @@
+% Основные настройки документа
+\documentclass[8pt]{beamer} % Тип документа и размер шрифта
+\usepackage[english, russian]{babel} % Используемые языки
+\usepackage[T1, T2A]{fontenc} % Кодировка кириллицы
+\usepackage[utf8]{inputenc} % Кодировка исходного файла
+\usepackage{siunitx} % Работа с величинами
+\usepackage{tikz} % Построение графиков из .csv-файлов
+\usepackage{pgfplots} % Оформление графиков
+\usepackage[dvipsnames]{xcolor} % Базовая цветовая палитра
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{pgfplotstable}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{makecell}
+\usepackage{array}
+
+% Настройки оформления
+\input{Setup/theme.tex} % Тема презентации
+\input{Sections/title.tex} % Титульный слайд
+\input{Setup/contents-setup.tex} % Оглавление
+\input{Setup/plots.tex} % Графики
+\input{Setup/pie-chart.tex}
+
+% Библиотеки
+\input{Setup/libraries.tex}
+
+% Команды
+\input{Setup/commands.tex}
+
+% Начало документа
+\begin{document}
+
+% Структура документа
+\frame{\titlepage} % Титульный слайд
+\include{Sections/contents} % Оглавление
+\include{Sections/introduction} % Введение
+
+\include{Sections/section-1} % Производство
+\include{Sections/section-2} % Потребление
+\include{Sections/section-3} % Запасы
+\include{Sections/section-4} % Международная торговля
+\include{Sections/section-5} % Регулирование
+\include{Sections/section-6} % Фирменная структура рынка
+\include{Sections/section-7} % Цены
+\include{Sections/section-8} % Прогноз
+\include{Sections/section-9} % Рекомендации
+
+\include{Sections/conclusion} % Заключение
+
+% Конец документа
+\end{document}
